@@ -12,7 +12,6 @@ class Swingtest extends JFrame implements ActionListener{
     JButton calbtn = new JButton("Calculate");
     Algoritms algoritms = new Algoritms();
 
-
     public Swingtest()
     {
         JPanel myPanel = new JPanel();
