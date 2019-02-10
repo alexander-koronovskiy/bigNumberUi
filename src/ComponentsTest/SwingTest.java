@@ -3,33 +3,40 @@ package ComponentsTest;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.Arrays;
-import java.util.Collections;
 
 class Swingtest extends JFrame implements ActionListener{
+    JPanel myPanel;
     JTextField txtdata;
+    JTextField inputdata;
     JTextField outresult;
     JButton calbtn = new JButton("Calculate");
     Algoritms algoritms = new Algoritms();
 
     public Swingtest()
     {
-        JPanel myPanel = new JPanel();
-        add(myPanel);
-        // myPanel.addKeyListener(this);
-        myPanel.setLayout(new GridLayout(3, 3));
+        myPanel = new JPanel();
         txtdata = new JTextField();
-        myPanel.add(txtdata);
-        myPanel.add(calbtn);
-        calbtn.addActionListener(this);
+        inputdata = new JTextField();
         outresult = new JTextField();
+
+        add(myPanel);
+        myPanel.setLayout(new GridLayout(4, 4));
+
+        myPanel.add(txtdata);
+        myPanel.add(inputdata);
+        myPanel.add(calbtn);
         myPanel.add(outresult);
+
+        calbtn.addActionListener(this);
+        txtdata.addKeyListener(new KeyL());
+
     }
 
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == calbtn) {
-            String data = txtdata.getText(); //perform your operation
+            String data = txtdata.getText();
+            String otherdata = inputdata.getText();
             String s = algoritms.bigNumAlgs(data);
             outresult.setText(s);
         }

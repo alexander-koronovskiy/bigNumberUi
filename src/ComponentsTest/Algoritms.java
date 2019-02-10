@@ -3,7 +3,7 @@ package ComponentsTest;
 import java.util.Arrays;
 import java.util.Collections;
 
-class Algoritms {
+class Algoritms{
     String bigNumAlgs(String data)
     {
         String s="";
@@ -29,4 +29,5 @@ class Algoritms {
         catch (IllegalArgumentException e) { s = "Неверный ввод"; }
         finally { return s; }
     }
+
 }
