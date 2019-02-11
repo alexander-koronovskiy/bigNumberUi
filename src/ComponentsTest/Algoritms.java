@@ -4,8 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 class Algoritms{
-    String bigNumAlgs(String data)
-    {
+    String bigNumAlgs(String data) {
         String s="";
         int numData;
 
