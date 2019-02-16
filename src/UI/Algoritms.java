@@ -1,4 +1,4 @@
-package ComponentsTest;
+package UI;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,4 +29,17 @@ class Algoritms{
         finally { return s; }
     }
 
+    String sum(String a, String b) {
+        int sum;
+        String s="";
+        try
+        {
+            sum = Integer.parseInt(a) + Integer.parseInt(b);
+            s = String.valueOf(sum);
+        }
+        catch (IllegalArgumentException e) { s = "Неверный ввод"; }
+        finally { return s; }
+    }
+
+    
 }

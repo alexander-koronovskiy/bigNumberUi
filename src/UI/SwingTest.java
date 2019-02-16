@@ -1,4 +1,4 @@
-package ComponentsTest;
+package UI;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -15,9 +15,9 @@ class Swingtest extends JFrame implements ActionListener {
 
     public Swingtest() {
         myPanel = new JPanel();
-        txtdata = new JTextField();
-        inputdata = new JTextField();
-        outresult = new JTextField();
+        txtdata = new JTextField("первое слагаемое");
+        inputdata = new JTextField("второе слагаемое");
+        outresult = new JTextField("результат");
 
         add(myPanel);
         myPanel.setLayout(new GridLayout(4, 4));
@@ -28,16 +28,7 @@ class Swingtest extends JFrame implements ActionListener {
         myPanel.add(outresult);
 
         calbtn.addActionListener(this);
-        txtdata.addKeyListener(new KeyL());
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == calbtn) {
-            String data = txtdata.getText();
-            String otherdata = inputdata.getText();
-            String s = algoritms.bigNumAlgs(data);
-            outresult.setText(s);
-        }
+        inputdata.addKeyListener(new KeyL());
     }
 
     class KeyL implements KeyListener {
@@ -48,9 +39,22 @@ class Swingtest extends JFrame implements ActionListener {
             {
                 String data = txtdata.getText();
                 String otherdata = inputdata.getText();
-                String s = algoritms.bigNumAlgs(data);
+                String s = algoritms.sum(data,otherdata);
                 outresult.setText(s);
             }
+        }
+    }
+
+    public void action() {
+        String data = txtdata.getText();
+        String otherdata = inputdata.getText();
+        String s = algoritms.sum(data,otherdata);
+        outresult.setText(s);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == calbtn) {
+            this.action();
         }
     }
 
