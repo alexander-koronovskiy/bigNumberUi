@@ -6,42 +6,22 @@ import java.util.logging.*;
 
 class JDBCtest {
 
-    //URL к базе состоит из протокола:подпротокола://[хоста]:[порта_СУБД]/[БД] и других_сведений
-    String url = "jdbc:postgresql://localhost:5432/data";
-    String name = "postgres";
-    String password = "iron2479";
-    Connection connection = null;
-
     public static void main(String args[]) {
 
         String age = "15";
         String city = "Orenburg";
         String person = "Igor";
         JDBCtest j = new JDBCtest();
+        ConnectDB connectDB = new ConnectDB();
 
         try {
-            Connection connection = j.connectToDB();
+            Connection connection = connectDB.connectToDB();
             j.isertData(connection,age,city,person);
             j.printLast(connection);
         } catch (Exception e){
             System.out.println("Не могу выролнить запрос");
         }
-
     }
-
-    public Connection connectToDB() {
-        Statement statement = null;
-            try {
-                Class.forName("org.postgresql.Driver");
-                System.out.println("Драйвер подключен");
-                //Создаём соединение
-                connection = DriverManager.getConnection(url, name, password);
-                System.out.println("Соединение установлено");
-            } catch (Exception e) {
-                System.out.println("Не удается соединиться с сервером");
-            }
-        return connection;
-        }
 
     public void isertData(Connection connection, String data1, String data2, String data3) {
         try {
