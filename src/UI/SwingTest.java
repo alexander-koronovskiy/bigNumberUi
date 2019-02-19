@@ -39,7 +39,7 @@ class Swingtest extends JFrame implements ActionListener {
             {
                 String data = txtdata.getText();
                 String otherdata = inputdata.getText();
-                String s = algoritms.sum(data,otherdata);
+                String s = algoritms.note(data,otherdata);
                 outresult.setText(s);
             }
         }
@@ -48,7 +48,7 @@ class Swingtest extends JFrame implements ActionListener {
     public void action() {
         String data = txtdata.getText();
         String otherdata = inputdata.getText();
-        String s = algoritms.sum(data,otherdata);
+        String s = algoritms.note(data,otherdata);
         outresult.setText(s);
     }
 

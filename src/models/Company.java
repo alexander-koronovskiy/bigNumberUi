@@ -4,20 +4,19 @@ import java.sql.DriverManager;
 import java.sql.*;
 import java.util.logging.*;
 
-class JDBCtest {
-
+public class Company {
     public static void main(String args[]) {
 
         String age = "15";
-        String city = "Orenburg";
+        String city = "Moscow";
         String person = "Igor";
-        JDBCtest j = new JDBCtest();
+        Company j = new Company();
         ConnectDB connectDB = new ConnectDB();
 
         try {
             Connection connection = connectDB.connectToDB();
             j.isertData(connection,age,city,person);
-            j.printLast(connection);
+            System.out.println(j.printLast(connection));
         } catch (Exception e){
             System.out.println("Не могу выролнить запрос");
         }
@@ -38,15 +37,17 @@ class JDBCtest {
         }
     }
 
-    public void printLast(Connection connection){
+    public String printLast(Connection connection){
+        String s = "";
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             ResultSet result1 = statement.executeQuery("SELECT * FROM company order by id desc limit 1;");
             while (result1.next()) {
-                System.out.println(result1.getString("name") + " " + result1.getString("age"));
+                s = s + result1.getInt("id") + " " + result1.getString("name") + " " + result1.getString("age");
             }
-        } catch (Exception e){e.printStackTrace();}
+        } catch (Exception e){e.printStackTrace(); }
+        return s;
     }
 
 }
