@@ -5,22 +5,6 @@ import java.sql.*;
 import java.util.logging.*;
 
 public class Company {
-    public static void main(String args[]) {
-
-        String age = "15";
-        String city = "Moscow";
-        String person = "Igor";
-        Company j = new Company();
-        ConnectDB connectDB = new ConnectDB();
-
-        try {
-            Connection connection = connectDB.connectToDB();
-            j.isertData(connection,age,city,person);
-            System.out.println(j.printLast(connection));
-        } catch (Exception e){
-            System.out.println("Не могу выролнить запрос");
-        }
-    }
 
     public void isertData(Connection connection, String data1, String data2, String data3) {
         try {
@@ -45,6 +29,19 @@ public class Company {
             ResultSet result1 = statement.executeQuery("SELECT * FROM company order by id desc limit 1;");
             while (result1.next()) {
                 s = s + result1.getInt("id") + " " + result1.getString("name") + " " + result1.getString("age");
+            }
+        } catch (Exception e){e.printStackTrace(); }
+        return s;
+    }
+
+    public String deleteLast(Connection connection){
+        String s = "";
+        try {
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet result1 = statement.executeQuery("SELECT MAX(id) FROM company");
+            while (result1.next()) {
+                s = s + result1.getInt("id");
             }
         } catch (Exception e){e.printStackTrace(); }
         return s;

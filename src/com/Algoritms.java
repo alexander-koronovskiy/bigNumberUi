@@ -1,8 +1,7 @@
-package UI;
+package com;
 
 import models.Company;
 import models.ConnectDB;
-import java.sql.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,9 +44,9 @@ class Algoritms{
         finally { return s; }
     }
 
-    String note(String data, String otherdata){
+    String note(String age, String name){
         Company company = new Company();
-        company.isertData(new ConnectDB().connectToDB(), data, "Moscow", otherdata);
+        company.isertData(new ConnectDB().connectToDB(), age, "Moscow", name);
         return  company.printLast(new ConnectDB().connectToDB());
     }
 }
