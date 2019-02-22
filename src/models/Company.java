@@ -6,7 +6,7 @@ import java.util.logging.*;
 
 public class Company {
 
-    public void isertData(Connection connection, String data1, String data2, String data3) {
+    public void insertData(Connection connection, String data1, String data2, String data3) {
         try {
             String sql = "INSERT INTO company VALUES (?,?,?)";
             PreparedStatement stat = connection.prepareStatement(sql);
@@ -26,22 +26,9 @@ public class Company {
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            ResultSet result1 = statement.executeQuery("SELECT * FROM company order by id desc limit 1;");
+            ResultSet result1 = statement.executeQuery("SELECT * FROM backpack order by id desc limit 1;");
             while (result1.next()) {
                 s = s + result1.getInt("id") + " " + result1.getString("name") + " " + result1.getString("age");
-            }
-        } catch (Exception e){e.printStackTrace(); }
-        return s;
-    }
-
-    public String deleteLast(Connection connection){
-        String s = "";
-        try {
-            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
-            ResultSet result1 = statement.executeQuery("SELECT MAX(id) FROM company");
-            while (result1.next()) {
-                s = s + result1.getInt("id");
             }
         } catch (Exception e){e.printStackTrace(); }
         return s;

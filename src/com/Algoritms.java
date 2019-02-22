@@ -1,5 +1,6 @@
 package com;
 
+import models.Backpack;
 import models.Company;
 import models.ConnectDB;
 
@@ -46,7 +47,41 @@ class Algoritms{
 
     String note(String age, String name){
         Company company = new Company();
-        company.isertData(new ConnectDB().connectToDB(), age, "Moscow", name);
+        company.insertData(new ConnectDB().connectToDB(), age, "Moscow", name);
         return  company.printLast(new ConnectDB().connectToDB());
     }
+
+    String putInBackpack(String object, String volume, String value) {
+
+        int numVolume = 0;
+        int numValue = 0;
+        String s = "";
+        Backpack backpack = new Backpack();
+
+        try {
+            numVolume = Integer.parseInt(volume);
+            numValue = Integer.parseInt(value);
+        } catch (Exception e){
+            numVolume = 0;
+            numValue = 0;
+            e.printStackTrace();
+        } finally {
+            if (numValue != 0) {
+                backpack.insertData
+                        (new ConnectDB().connectToDB(), object, numVolume, numValue);
+                s = s + backpack.printLast(new ConnectDB().connectToDB());
+            }
+        }
+        if (s.equals("")) return "Не могу внести предмет. Проверьте введенные данные.";
+        else return s;
+    }
+
+    String backPackAlgoritm(){ return "Оптимальная сортировка предметов произведена";}
+
+    String cleanBackPack(){
+        return "Статус рюкзака: "
+                + new Backpack().DeleteAll(new ConnectDB().connectToDB());
+    }
+
+
 }
