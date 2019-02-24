@@ -17,9 +17,14 @@ class Swingtest extends JFrame implements ActionListener {
     JButton   calbtn    = new JButton("добавить данные");
     JButton   btn2      = new JButton("очистить содержимое");
     JButton   btn3      = new JButton("разместить предметы");
-    Algoritms algoritms = new Algoritms();
+    Algorithms algorithms = new Algorithms();
+
+    final static int LIMIT = 1000;
 
     public Swingtest() {
+
+        super("Алгоритм упаковки (текущая вместимость: " + LIMIT + ")");
+
         myPanel   = new JPanel();
         namedata  = new JTextField();
         txtdata   = new JTextField();
@@ -40,7 +45,7 @@ class Swingtest extends JFrame implements ActionListener {
         myPanel.add(inputdata);
         myPanel.add(calbtn);
         myPanel.add(btn2);
-        // myPanel.add(btn3);
+        myPanel.add(btn3);
         myPanel.add(outresult);
 
         calbtn.addActionListener(this);
@@ -58,7 +63,7 @@ class Swingtest extends JFrame implements ActionListener {
             this.clean();
         }
         if (e.getSource() == btn3){
-            this.clean();
+            this.packaging();
         }
     }
 
@@ -66,14 +71,18 @@ class Swingtest extends JFrame implements ActionListener {
         String object = namedata.getText();
         String volume = txtdata.getText();
         String value  = inputdata.getText();
-        String s = algoritms.putInBackpack(object,volume,value);
+        String s = algorithms.putInBackpack(object,volume,value);
         outresult.setText(s);
     }
 
     public void clean(){
-        outresult.setText(algoritms.cleanBackPack());
+        outresult.setText(algorithms.cleanBackPack());
     }
-    
+
+    public void packaging(){
+        outresult.setText(algorithms.backPackAlgorithm());
+    }
+
     public static void main(String args[]) {
         Swingtest g = new Swingtest();
         g.setLocation(10, 10);
@@ -90,7 +99,7 @@ class Swingtest extends JFrame implements ActionListener {
             {
                 String data = txtdata.getText();
                 String otherdata = inputdata.getText();
-                String s = algoritms.note(otherdata, data);
+                String s = algorithms.note(otherdata, data);
                 outresult.setText(s);
             }
         }

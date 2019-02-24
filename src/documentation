@@ -1,0 +1,43 @@
+###################Вариант алгоритма записи данных через Map
+
+    public Map<Map,Map> printAll(Connection connection){
+        Map<Map,Map> notes = new HashMap<>();
+        Map values = new HashMap();
+        Map description = new HashMap();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result1 = statement.executeQuery
+                    ("SELECT * FROM backpack;");
+            while (result1.next()) {
+                description.put(result1.getInt("id"),result1.getString("object"));
+                values.put(result1.getFloat("volume"),result1.getFloat("value"));
+            }   notes.put(description,values);
+
+
+        } catch (Exception e){e.printStackTrace(); }
+        return notes;
+    }
+
+###################Вариант алгоритма записи данных через строку в цикле while на гитхабе
+
+        notes.add(result1.getInt("id") + " "
+        + result1.getString("object") + " "
+        + result1.getInt("volume") + " "
+        + result1.getInt("value"));
+
+####################### Возврат элемента из предыдущего примера
+        return note.get(0).toString().split(" ")[0] + " " + note.size();
+
+
+        // берем элемент из тримапа
+        // пока оставшийся объем не ноль
+        // сравниваем с оставшимся объемом
+        // если объем меньше оставшегося
+        //      вычитаем объем,складывем полезность
+
+
+        // если его объем меньше оставшегося
+        //      получаем коэффицент - делим оставшийся объем на объем элемента
+        //      умножаем коэффицент на полезность текущего - складываем
+        // вычитаем - повторяем
+        // выводим : оставшийся объем

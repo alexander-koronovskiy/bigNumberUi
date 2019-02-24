@@ -1,20 +1,17 @@
 package models;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class Backpack {
 
-    public void insertData(Connection connection, String object,int volume, int value) {
+    public void insertData(Connection connection, String object,float volume, float value) {
         try {
             String sql = "INSERT INTO backpack VALUES (?,?,?)";
             PreparedStatement stat = connection.prepareStatement(sql);
             stat.setString(1,object);
-            stat.setInt(2, volume);
-            stat.setInt(3, value);
+            stat.setFloat(2, volume);
+            stat.setFloat(3, value);
             stat.executeUpdate();
             System.out.println("Данные добавлены: " + object + " " + volume + " " + value);
         } catch (Exception e){
@@ -33,15 +30,16 @@ public class Backpack {
             while (result1.next()) {
                 s = s + result1.getInt("id") + " "
                         + result1.getString("object") + " "
-                        + result1.getInt("volume") + " "
-                        + result1.getInt("value");
+                        + result1.getFloat("volume") + " "
+                        + result1.getFloat("value");
             }
         } catch (Exception e){e.printStackTrace(); }
         return s;
     }
 
-    public ArrayList<String> printAll(Connection connection){
-        ArrayList<String> notes = new ArrayList<>();
+    public ArrayList printAll(Connection connection){
+        ArrayList notes = new ArrayList();
+
         try {
             Statement statement = connection.createStatement();
             ResultSet result1 = statement.executeQuery
@@ -49,8 +47,35 @@ public class Backpack {
             while (result1.next()) {
                 notes.add(result1.getInt("id") + " "
                         + result1.getString("object") + " "
-                        + result1.getInt("volume") + " "
-                        + result1.getInt("value"));
+                        + result1.getFloat("volume") + " "
+                        + result1.getFloat("value"));
+            }
+
+        } catch (Exception e){e.printStackTrace(); }
+        return notes;
+    }
+
+    public ArrayList printVolume(Connection connection){
+        ArrayList notes = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result1 = statement.executeQuery
+                    ("SELECT * FROM backpack;");
+            while (result1.next()) {
+                notes.add(result1.getFloat("volume"));
+            }
+        } catch (Exception e){e.printStackTrace(); }
+        return notes;
+    }
+
+    public ArrayList printValue(Connection connection){
+        ArrayList notes = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result1 = statement.executeQuery
+                    ("SELECT * FROM backpack;");
+            while (result1.next()) {
+                notes.add(result1.getFloat("value"));
             }
         } catch (Exception e){e.printStackTrace(); }
         return notes;
