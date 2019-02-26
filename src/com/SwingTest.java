@@ -19,7 +19,7 @@ class Swingtest extends JFrame implements ActionListener {
     JButton   btn3      = new JButton("разместить предметы");
     Algorithms algorithms = new Algorithms();
 
-    final static int LIMIT = 1000;
+    final static int LIMIT = 100;
 
     public Swingtest() {
 

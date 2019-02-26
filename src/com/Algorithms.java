@@ -87,53 +87,87 @@ class Algorithms{
         Backpack backpack = new Backpack();
         Connection connection = new ConnectDB().connectToDB();
         notes = backpack.printAll(connection);
-        return this.sortedByWorth(notes) + "";
+
+        final Item[] items = this.notesToItem(notes);
+        Arrays.sort(items, Comparator.comparingDouble(Item::valuePerUnitOfWeight).reversed());
+
+        float weightSoFar = 0;
+        double valueSoFar = 0;
+        int currentItem = 0;
+
+        while( currentItem < items.length && weightSoFar != backpackSize){
+            if (weightSoFar + items[currentItem].getWeight() < backpackSize){
+                valueSoFar  += items[currentItem].getValue();
+                weightSoFar += items[currentItem].getWeight();
+            } else {
+                valueSoFar += ((backpackSize - weightSoFar) /
+                        items[currentItem].getWeight()) *
+                        items[currentItem].getValue();
+                weightSoFar = backpackSize;
+            }
+            currentItem++;
+        }
+
+        System.out.println(Arrays.toString(items));
+        return "Общая ценность предметов: " + valueSoFar + " "
+                + "тяжесть рюкзака: " + weightSoFar + " "
+                + "элемент:  " + currentItem;
     }
 
-    Map sortedByWorth(ArrayList notes){
-        Map worth = new TreeMap<>(Collections.reverseOrder());
-        float tmp;
+    Item[] notesToItem(ArrayList notes){
+        Item[] items = new Item[notes.size()];
         for (int i =0; i < notes.size(); i++){
-            tmp = Float.valueOf(notes.get(i).toString().split(" ")[3]) /
-                    Float.valueOf(notes.get(i).toString().split(" ")[2]);
-            worth.put(tmp,notes.get(i));
+            String name = notes.get(i).toString().split(" ")[1];
+            Float weight = Float.valueOf(notes.get(i).toString().split(" ")[2]);
+            Float value = Float.valueOf(notes.get(i).toString().split(" ")[3]);
+            items[i] = new Item(name, weight, value);
         }
-        return worth;
+        return items;
     }
 
-    String oldPackingAlgorithm(ArrayList notes){
+    class Item{
+        private String name;
+        private double weight;
+        private double value;
 
-        float valueSize = 0;
-        float currentPackSize = backpackSize;
-        float k;
-        int i = 0;
-        int range = notes.size();
-
-
-        while (currentPackSize !=0){
-            float elementVolume = Float.valueOf(notes.get(i).toString().split(" ")[2]);
-            float elementValue = Float.valueOf(notes.get(i).toString().split(" ")[3]);
-
-            if (currentPackSize > elementVolume){
-                currentPackSize = currentPackSize - elementVolume;
-                valueSize = valueSize + Float.valueOf(notes.get(i).toString().split(" ")[3]);
-            }
-            if (currentPackSize < elementVolume){
-                k = currentPackSize / elementVolume;
-                valueSize = valueSize + k * elementValue;
-            }
-            i++;
-            if (i == range) break;
+        public Item(String name, Float weight, Float value){
+            this.name = name;
+            this.weight = weight;
+            this.value = value;
         }
 
-        return "Общая ценность: " + valueSize + " "
-                + "Объем оставшегося пространства: " + currentPackSize;
-    }
+        public double valuePerUnitOfWeight(){
+            return value /  (double) weight;
+        }
 
-    void newPackingAlorithm(Map<Float,String> dictionary){
-        // пока в слваре есть элемент
-        // извлекаем из него строку, из строки - значение объема части
-        // алгоритм, похожий на oldPacking, написанный ранее
+        public String getName() {
+            return name;
+        }
+
+        public double getWeight() {
+            return weight;
+        }
+
+        public double getValue() {
+            return value;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setWeight(double weight) {
+            this.weight = weight;
+        }
+
+        public void setValue(double value) {
+            this.value = value;
+        }
+
+        public String toString(){
+            return "{item:  " + name + " weight: " + weight + " value: " + value + "}";
+        }
+
     }
 
 }
